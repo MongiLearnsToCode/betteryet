@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { ImageUploader } from "@/components/ImageUploader";
 
 export default function Home() {
   return (
@@ -24,6 +27,11 @@ export default function Home() {
             Save and see your changes instantly.
           </li>
         </ol>
+
+        <ImageUploader
+          cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}
+          uploadPreset="betteryet"
+        />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
