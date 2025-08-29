@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 import { ProfileForm } from "@/components/admin/ProfileForm";
 
 export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
+  const pendingProfiles = useQuery(api.profiles.getPendingProfiles);
 
   useEffect(() => {
     // Check if the user is logged in
@@ -40,8 +43,39 @@ export default function AdminPage() {
             Logout
           </button>
         </div>
-        <p className="mb-8 text-gray-600">Create new creative profiles</p>
-        <ProfileForm />
+        
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">Pending Profiles</h2>
+          {pendingProfiles === undefined ? (
+            <p>Loading...</p>
+          ) : pendingProfiles.length === 0 ? (
+            <p>No pending profiles.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pendingProfiles.map((profile) => (
+                <div key={profile._id} className="bg-white rounded-lg shadow-md p-6">
+                  <h3 className="text-lg font-semibold mb-2">{profile.bio.split(' ').slice(0, 2).join(' ')}</h3>
+                  <p className="text-gray-600 mb-2">{profile.profession}</p>
+                  <p className="text-gray-600 mb-4">{profile.location}</p>
+                  <div className="flex space-x-2">
+                    <button className="bg-green-600 text-white py-1 px-3 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
+                      Approve
+                    </button>
+                    <button className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        
+        <div>
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">Create New Profile</h2>
+          <p className="mb-6 text-gray-600">Create new creative profiles</p>
+          <ProfileForm />
+        </div>
       </div>
     </div>
   );
