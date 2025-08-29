@@ -19,7 +19,7 @@
 ## Phase 3 – Discovery & Browsing
 - [x] Build directory page with profile grid/list.  
 - [x] Add search by profession/discipline.  
-- [ ] Add location filter.  
+- [x] Add location filter.  
 - [ ] Hook up Convex queries for filtering.  
 
 ---

@@ -52,6 +52,50 @@ export const searchApprovedProfilesByProfession = query({
   },
 });
 
+// Get approved profiles by location
+export const getApprovedProfilesByLocation = query({
+  args: {
+    location: v.string(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.query("profiles")
+      .withIndex("by_location", q => q.eq("location", args.location))
+      .filter(q => q.eq(q.field("approved"), true))
+      .collect();
+  },
+});
+
+// Get approved profiles by profession and location
+export const searchApprovedProfilesByProfessionAndLocation = query({
+  args: {
+    profession: v.string(),
+    location: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // Since we can only use one index at a time, we'll use the profession index
+    // and filter by location in memory
+    const profiles = await ctx.db.query("profiles")
+      .withIndex("by_profession", q => q.eq("profession", args.profession))
+      .filter(q => q.eq(q.field("approved"), true))
+      .collect();
+      
+    // Filter by location
+    return profiles.filter(profile => profile.location === args.location);
+  },
+});
+
+// Get all unique locations for the filter dropdown
+export const getAllLocations = query({
+  handler: async (ctx) => {
+    const profiles = await ctx.db.query("profiles")
+      .withIndex("by_approved", q => q.eq("approved", true))
+      .collect();
+      
+    const locations = new Set(profiles.map(profile => profile.location));
+    return Array.from(locations).sort();
+  },
+});
+
 // Get a single profile by ID
 export const getProfileById = query({
   args: {
