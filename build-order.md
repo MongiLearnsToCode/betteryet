@@ -28,7 +28,7 @@
 - [x] Build basic admin login (Convex Auth for just you).  
 - [x] Admin dashboard: list pending profiles.  
 - [x] Approve/reject/edit profiles.  
-- [ ] Only approved profiles show in client-facing directory.  
+- [x] Only approved profiles show in client-facing directory.  
 
 ---
 
