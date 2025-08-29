@@ -1,7 +1,7 @@
 # Build Order: Better Yet (MVP)
 
 ## Phase 1 – Skeleton
-- [ ] Set up Next.js project (with Tailwind + shadcn/ui).  
+- [x] Set up Next.js project (with Tailwind + shadcn/ui).  
 - [ ] Connect Convex backend.  
 - [ ] Add Cloudinary integration for image uploads.  
 - [ ] Deploy “Hello World” app to Vercel → confirm CI/CD works.  
