@@ -34,7 +34,7 @@
 
 ## Phase 5 – Contact
 - [x] Add `mailto:` "Contact" button on profile detail.  
-- [ ] Test across browsers (email client should open correctly).  
+- [x] Test across browsers (email client should open correctly).  
 
 ---
 
