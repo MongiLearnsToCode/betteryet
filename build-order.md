@@ -2,7 +2,7 @@
 
 ## Phase 1 – Skeleton
 - [x] Set up Next.js project (with Tailwind + shadcn/ui).  
-- [ ] Connect Convex backend.  
+- [x] Connect Convex backend.  
 - [ ] Add Cloudinary integration for image uploads.  
 - [ ] Deploy “Hello World” app to Vercel → confirm CI/CD works.  
 
