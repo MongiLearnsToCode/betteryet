@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Id } from "../../convex/_generated/dataModel";
 import { ProfileForm } from "@/components/admin/ProfileForm";
 
 export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const pendingProfiles = useQuery(api.profiles.getPendingProfiles);
+  const updateProfile = useMutation(api.profiles.updateProfile);
 
   useEffect(() => {
     // Check if the user is logged in
@@ -25,6 +27,24 @@ export default function AdminPage() {
     localStorage.removeItem("adminLoggedIn");
     setIsLoggedIn(false);
     router.push("/admin/login");
+  };
+
+  const handleApprove = async (profileId: Id<"profiles">) => {
+    try {
+      await updateProfile({ id: profileId, approved: true });
+    } catch (error) {
+      console.error("Error approving profile:", error);
+      alert("Error approving profile. Please try again.");
+    }
+  };
+
+  const handleReject = async (profileId: Id<"profiles">) => {
+    try {
+      await updateProfile({ id: profileId, approved: false });
+    } catch (error) {
+      console.error("Error rejecting profile:", error);
+      alert("Error rejecting profile. Please try again.");
+    }
   };
 
   if (!isLoggedIn) {
@@ -58,10 +78,16 @@ export default function AdminPage() {
                   <p className="text-gray-600 mb-2">{profile.profession}</p>
                   <p className="text-gray-600 mb-4">{profile.location}</p>
                   <div className="flex space-x-2">
-                    <button className="bg-green-600 text-white py-1 px-3 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
+                    <button 
+                      onClick={() => handleApprove(profile._id)}
+                      className="bg-green-600 text-white py-1 px-3 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                    >
                       Approve
                     </button>
-                    <button className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                    <button 
+                      onClick={() => handleReject(profile._id)}
+                      className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                    >
                       Reject
                     </button>
                   </div>

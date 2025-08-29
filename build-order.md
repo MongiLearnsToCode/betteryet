@@ -27,7 +27,7 @@
 ## Phase 4 – Admin Approval
 - [x] Build basic admin login (Convex Auth for just you).  
 - [x] Admin dashboard: list pending profiles.  
-- [ ] Approve/reject/edit profiles.  
+- [x] Approve/reject/edit profiles.  
 - [ ] Only approved profiles show in client-facing directory.  
 
 ---
