@@ -20,7 +20,7 @@
 - [x] Build directory page with profile grid/list.  
 - [x] Add search by profession/discipline.  
 - [x] Add location filter.  
-- [ ] Hook up Convex queries for filtering.  
+- [x] Hook up Convex queries for filtering.  
 
 ---
 

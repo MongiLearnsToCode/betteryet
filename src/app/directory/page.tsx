@@ -9,22 +9,10 @@ export default function DirectoryPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const locations = useQuery(api.profiles.getAllLocations);
-  const profiles = useQuery(
-    searchTerm && locationFilter 
-      ? api.profiles.searchApprovedProfilesByProfessionAndLocation 
-      : searchTerm 
-        ? api.profiles.searchApprovedProfilesByProfession 
-        : locationFilter 
-          ? api.profiles.getApprovedProfilesByLocation 
-          : api.profiles.getApprovedProfiles,
-    searchTerm && locationFilter 
-      ? { profession: searchTerm, location: locationFilter } 
-      : searchTerm 
-        ? { profession: searchTerm } 
-        : locationFilter 
-          ? { location: locationFilter } 
-          : undefined
-  );
+  const profiles = useQuery(api.profiles.searchApprovedProfiles, {
+    profession: searchTerm || undefined,
+    location: locationFilter || undefined,
+  });
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

@@ -39,48 +39,26 @@ export const getApprovedProfiles = query({
   },
 });
 
-// Search approved profiles by profession
-export const searchApprovedProfilesByProfession = query({
+// Search approved profiles by filters
+export const searchApprovedProfiles = query({
   args: {
-    profession: v.string(),
+    profession: v.optional(v.string()),
+    location: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    return await ctx.db.query("profiles")
-      .withIndex("by_profession", q => q.eq("profession", args.profession))
-      .filter(q => q.eq(q.field("approved"), true))
-      .collect();
-  },
-});
-
-// Get approved profiles by location
-export const getApprovedProfilesByLocation = query({
-  args: {
-    location: v.string(),
-  },
-  handler: async (ctx, args) => {
-    return await ctx.db.query("profiles")
-      .withIndex("by_location", q => q.eq("location", args.location))
-      .filter(q => q.eq(q.field("approved"), true))
-      .collect();
-  },
-});
-
-// Get approved profiles by profession and location
-export const searchApprovedProfilesByProfessionAndLocation = query({
-  args: {
-    profession: v.string(),
-    location: v.string(),
-  },
-  handler: async (ctx, args) => {
-    // Since we can only use one index at a time, we'll use the profession index
-    // and filter by location in memory
-    const profiles = await ctx.db.query("profiles")
-      .withIndex("by_profession", q => q.eq("profession", args.profession))
-      .filter(q => q.eq(q.field("approved"), true))
-      .collect();
-      
-    // Filter by location
-    return profiles.filter(profile => profile.location === args.location);
+    let query = ctx.db.query("profiles").withIndex("by_approved", q => q.eq("approved", true));
+    
+    // Apply profession filter if provided
+    if (args.profession) {
+      query = query.filter(q => q.eq(q.field("profession"), args.profession));
+    }
+    
+    // Apply location filter if provided
+    if (args.location) {
+      query = query.filter(q => q.eq(q.field("location"), args.location));
+    }
+    
+    return await query.collect();
   },
 });
 
