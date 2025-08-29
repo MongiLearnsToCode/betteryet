@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { api } from "../../convex/_generated/api";
 import { useQuery } from "convex/react";
+import { ImageUploader } from "@/components/ImageUploader";
 
 export default function Home() {
   const helloWorldData = useQuery(api.helloWorld.getHelloWorld);
@@ -42,6 +43,14 @@ export default function Home() {
             {convexTestMessage}
           </li>
         </ol>
+
+        <div className="w-full max-w-md">
+          <h2 className="text-xl font-bold mb-4">Cloudinary Image Upload Test</h2>
+          <ImageUploader
+            cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}
+            uploadPreset="betteryet" // We'll need to create this preset in Cloudinary
+          />
+        </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
