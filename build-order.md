@@ -4,7 +4,7 @@
 - [x] Set up Next.js project (with Tailwind + shadcn/ui).  
 - [x] Connect Convex backend.  
 - [x] Add Cloudinary integration for image uploads.  
-- [ ] Deploy "Hello World" app to Vercel → confirm CI/CD works.  
+- [x] Deploy "Hello World" app to Vercel → confirm CI/CD works.  
 
 ---
 
