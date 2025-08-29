@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useQuery, useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { useQuery } from "convex/react";
+import { api } from "../../../../convex/_generated/api";
+import { Id } from "../../../../convex/_generated/dataModel";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function ProfileDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const profile = useQuery(api.profiles.getProfileById, { id: params.id });
+  const profile = useQuery(api.profiles.getProfileById, { id: params.id as Id<"profiles"> });
   const [mainImageIndex, setMainImageIndex] = useState(0);
 
   // Handle profile not found
