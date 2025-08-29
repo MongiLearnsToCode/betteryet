@@ -6,6 +6,7 @@ import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ProfileDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -20,7 +21,16 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
   }, [profile, router]);
 
   if (profile === undefined) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading profile...</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (profile === null) {
@@ -35,6 +45,12 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
+        <div className="mb-6">
+          <Link href="/directory" className="text-blue-600 hover:underline">
+            &larr; Back to Directory
+          </Link>
+        </div>
+        
         <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl mx-auto">
           {/* Profile Header */}
           <div className="p-6 border-b border-gray-200">
@@ -51,8 +67,9 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
               </div>
               
               {/* Profile Info */}
-              <div className="text-center md:text-left">
-                <h1 className="text-2xl font-bold text-gray-800">{profile.bio.split(' ').slice(0, 2).join(' ')}</h1>
+              <div className="text-center md:text-left flex-grow">
+                <h1 className="text-2xl font-bold text-gray-900">{profile.bio.split(' ').slice(0, 2).join(' ')}</h1>
+                <p className="text-gray-600 mb-2">{profile.profession}</p>
                 <p className="text-gray-600 mb-4">{profile.location}</p>
                 
                 {/* Contact Button */}
@@ -60,7 +77,7 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
                   onClick={handleContact}
                   className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                 >
-                  Contact
+                  Contact via Email
                 </button>
               </div>
             </div>
@@ -70,14 +87,14 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
           <div className="p-6">
             {/* Bio */}
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-gray-800 mb-3">About</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">About</h2>
               <p className="text-gray-600">{profile.bio}</p>
             </div>
             
             {/* Portfolio Images */}
             {profile.images && profile.images.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-xl font-semibold text-gray-800 mb-3">Portfolio</h2>
+                <h2 className="text-xl font-semibold text-gray-900 mb-3">Portfolio</h2>
                 
                 {/* Main Image */}
                 {profile.images[mainImageIndex] && (
@@ -114,7 +131,7 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
             {/* Links */}
             {profile.links && (
               <div>
-                <h2 className="text-xl font-semibold text-gray-800 mb-3">Links</h2>
+                <h2 className="text-xl font-semibold text-gray-900 mb-3">Links</h2>
                 <div className="flex flex-wrap gap-3">
                   {profile.links.website && (
                     <a 

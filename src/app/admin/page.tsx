@@ -6,6 +6,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import { ProfileForm } from "@/components/admin/ProfileForm";
+import Link from "next/link";
 
 export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -55,17 +56,22 @@ export default function AdminPage() {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
-          >
-            Logout
-          </button>
+          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+          <div className="flex items-center space-x-4">
+            <Link href="/" className="text-blue-600 hover:underline">
+              Back to Directory
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+            >
+              Logout
+            </button>
+          </div>
         </div>
         
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">Pending Profiles</h2>
+        <div className="mb-12 bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">Pending Profiles</h2>
           {pendingProfiles === undefined ? (
             <p>Loading...</p>
           ) : pendingProfiles.length === 0 ? (
@@ -73,7 +79,7 @@ export default function AdminPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {pendingProfiles.map((profile) => (
-                <div key={profile._id} className="bg-white rounded-lg shadow-md p-6">
+                <div key={profile._id} className="border border-gray-200 rounded-lg p-4">
                   <h3 className="text-lg font-semibold mb-2">{profile.bio.split(' ').slice(0, 2).join(' ')}</h3>
                   <p className="text-gray-600 mb-2">{profile.profession}</p>
                   <p className="text-gray-600 mb-4">{profile.location}</p>
@@ -97,8 +103,8 @@ export default function AdminPage() {
           )}
         </div>
         
-        <div>
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">Create New Profile</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">Create New Profile</h2>
           <p className="mb-6 text-gray-600">Create new creative profiles</p>
           <ProfileForm />
         </div>

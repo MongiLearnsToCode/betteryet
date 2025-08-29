@@ -28,7 +28,7 @@ export function ProfileCard({
       
       {/* Profile Info */}
       <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-800 truncate">{name}</h3>
+        <h3 className="text-lg font-semibold text-gray-900 truncate">{name}</h3>
         <p className="text-sm text-gray-600 mb-3">{profession}</p>
         
         {/* Preview Images */}
