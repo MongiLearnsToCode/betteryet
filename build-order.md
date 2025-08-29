@@ -12,7 +12,7 @@
 - [x] Define Convex schema: `profiles` collection (photo, bio, location, 6 images, email, links).  
 - [x] Build profile form (for admin input only at MVP).  
 - [x] Build profile card (photo, name, profession, preview images, contact button).  
-- [ ] Build profile detail page (full info + 6 images + links + email).  
+- [x] Build profile detail page (full info + 6 images + links + email).  
 
 ---
 
