@@ -7,6 +7,7 @@ export const createProfile = mutation({
     photo: v.string(),
     bio: v.string(),
     location: v.string(),
+    profession: v.string(), // Adding profession field
     images: v.array(v.string()),
     email: v.string(),
     links: v.optional(v.object({
@@ -38,6 +39,19 @@ export const getApprovedProfiles = query({
   },
 });
 
+// Search approved profiles by profession
+export const searchApprovedProfilesByProfession = query({
+  args: {
+    profession: v.string(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.query("profiles")
+      .withIndex("by_profession", q => q.eq("profession", args.profession))
+      .filter(q => q.eq(q.field("approved"), true))
+      .collect();
+  },
+});
+
 // Get a single profile by ID
 export const getProfileById = query({
   args: {
@@ -55,6 +69,7 @@ export const updateProfile = mutation({
     photo: v.optional(v.string()),
     bio: v.optional(v.string()),
     location: v.optional(v.string()),
+    profession: v.optional(v.string()), // Adding profession field
     images: v.optional(v.array(v.string())),
     email: v.optional(v.string()),
     links: v.optional(v.object({

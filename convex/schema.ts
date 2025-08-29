@@ -6,6 +6,7 @@ export default defineSchema({
     photo: v.string(),
     bio: v.string(),
     location: v.string(),
+    profession: v.string(), // Adding profession field
     images: v.array(v.string()), // Array of up to 6 image URLs
     email: v.string(),
     links: v.optional(v.object({
@@ -19,4 +20,5 @@ export default defineSchema({
   })
     .index("by_approved", ["approved"])
     .index("by_location", ["location"])
+    .index("by_profession", ["profession"]) // Index for searching by profession
 });
